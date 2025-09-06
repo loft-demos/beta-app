@@ -65,7 +65,7 @@ spec:
       serviceAccountName: flux-cluster-generator
       containers:
         - name: controller
-          image: ghcr.io/loft-demos/flux-cluster-generator:latest
+          image: ghcr.io/loft-demos/flux-cluster-generator:0.0.1
           imagePullPolicy: IfNotPresent
           args:
             # Select cluster Secrets by labels (these are labels ON the Secret)
