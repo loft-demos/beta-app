@@ -36,6 +36,9 @@ spec:
               loft.sh/custom-links: |-
                 Flux-App=https://podinfo-{{ .Values.loft.virtualClusterName }}.{{ .Values.loft.clusterAnnotations.domain }}
                 Helm-Dashboard=https://helm-dashboard-{{ .Values.loft.virtualClusterName }}-{{ .Values.loft.clusterAnnotations.domainPrefix }}.{{ .Values.loft.clusterAnnotations.domain }}
+            labels:
+              env: '{{ .Values.env }}'
+              flux-app/podinfo: 'true'
         apps:
           - name: helm-dashboard
             namespace: helm-dashboard
