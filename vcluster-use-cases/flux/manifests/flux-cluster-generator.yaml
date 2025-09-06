@@ -1,0 +1,90 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: flux-cluster-generator
+---
+# Optional: the RSIP target namespace (must be watched by Flux Operator)
+# label a target application namespace so the controller will watch Secrets there
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: flux-apps
+  labels:
+    flux-cluster-generator-enabled: "true"
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: flux-cluster-generator
+  namespace: flux-cluster-generator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: flux-cluster-generator
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get","list","watch"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get","list","watch"]
+  - apiGroups: ["fluxcd.controlplane.io"]
+    resources: ["resourcesetinputproviders"]
+    verbs: ["get","list","watch","create","update","patch","delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: flux-cluster-generator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: flux-cluster-generator
+subjects:
+  - kind: ServiceAccount
+    name: flux-cluster-generator
+    namespace: flux-cluster-generator
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flux-cluster-generator
+  namespace: flux-cluster-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flux-cluster-generator
+  template:
+    metadata:
+      labels:
+        app: flux-cluster-generator
+    spec:
+      serviceAccountName: flux-cluster-generator
+      containers:
+        - name: controller
+          image: ghcr.io/loft-demos/flux-cluster-generator:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            # Select cluster Secrets by labels (these are labels ON the Secret)
+            - "--label-selector=fluxcd.io/secret-type=cluster"
+            # Only consider Secrets in Namespaces with this label
+            - "--namespace-label-selector=flux-cluster-generator-enabled=true"
+            # Create RSIPs into this namespace (must exist & be watched by Flux Operator)
+            - "--rsip-namespace=flux-apps"
+            # Secret data key that contains kubeconfig bytes
+            - "--secret-key=config"
+            # Derive cluster name from this Secret label; fallback = Secret name
+            - "--cluster-name-label-key=vcluster.loft.sh/cluster-name"
+            # Pass-through labels from Secret -> RSIP for ResourceSet selectors
+            - "--copy-label-keys=env,team"
+            - "--copy-label-prefixes=flux-app/"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
