@@ -102,7 +102,10 @@ spec:
       template:
         metadata: {}
         instanceTemplate:
-          metadata: {}
+          metadata:
+            labels:
+              env: '{{ .Values.env }}'
+              flux-app/podinfo: 'true'
         pro:
           enabled: true
         helmRelease:
