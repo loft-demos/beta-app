@@ -7,6 +7,9 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: flux-apps
+  metadata:
+    labels:
+      flux-cluster-generator-enabled: 'true'
 ---
 apiVersion: v1
 kind: Secret
