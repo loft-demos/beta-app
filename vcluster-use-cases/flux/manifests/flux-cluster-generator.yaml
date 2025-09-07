@@ -75,7 +75,7 @@ spec:
             # Create RSIPs into this namespace (must exist & be watched by Flux Operator)
             - "--rsip-namespace=flux-apps"
             # Secret data key that contains kubeconfig bytes
-            - "--secret-key=config"
+            - "--secret-key=value"
             # Derive cluster name from this Secret label; fallback = Secret name
             - "--cluster-name-label-key=loft.sh/vcluster-instance-name"
             # Pass-through labels from Secret -> RSIP for ResourceSet selectors
