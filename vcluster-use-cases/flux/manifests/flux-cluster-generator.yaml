@@ -77,7 +77,7 @@ spec:
             # Secret data key that contains kubeconfig bytes
             - "--secret-key=value"
             # Derive cluster name from this Secret label; fallback = Secret name
-            - "--cluster-name-label-key=loft.sh/vcluster-instance-name"
+            - "--cluster-name-label-key=vci.flux.loft.sh/name"
             # Pass-through labels from Secret -> RSIP for ResourceSet selectors
             - "--copy-label-keys=env,team"
             - "--copy-label-prefixes=flux-app/"
