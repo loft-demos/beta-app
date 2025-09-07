@@ -37,6 +37,7 @@ spec:
                 Flux-App=https://podinfo-{{ .Values.loft.virtualClusterName }}.{{ .Values.loft.clusterAnnotations.domain }}
                 Helm-Dashboard=https://helm-dashboard-{{ .Values.loft.virtualClusterName }}-{{ .Values.loft.clusterAnnotations.domainPrefix }}.{{ .Values.loft.clusterAnnotations.domain }}
             labels:
+              vcluster.com/import-fluxcd: 'true'
               env: '{{ .Values.env }}'
               flux-app/podinfo: 'true'
         apps:
@@ -88,8 +89,8 @@ spec:
           ingress: {}
         spaceTemplate:
           metadata: {}
-          apps: # this bash app will create a Kube Config for Flux that uses the vCluster Platform proxied URL
-            - name: generate-vcluster-kubeconfig
+          # apps: # this bash app will create a Kube Config for Flux that uses the vCluster Platform proxied URL
+          #   - name: generate-vcluster-kubeconfig
       parameters:
         - variable: env
           label: Deployment Environment
