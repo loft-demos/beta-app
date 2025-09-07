@@ -40,6 +40,7 @@ spec:
               vcluster.com/import-fluxcd: 'true'
               env: '{{ .Values.env }}'
               flux-app/podinfo: 'true'
+              flux-app/hello-world: 'false'
               app-subdomain: '{{ .Values.loft.clusterAnnotations.domainPrefix }}.{{ .Values.loft.clusterAnnotations.domain }}'
         apps:
           - name: helm-dashboard
