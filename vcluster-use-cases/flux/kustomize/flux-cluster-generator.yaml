@@ -1,0 +1,42 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: flux-cluster-generator
+  namespace: flux-cluster-generator
+spec:
+  interval: 12h
+  type: oci
+  url: oci://ghcr.io/loft-demos/charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: flux-cluster-generator
+  namespace: flux-cluster-generator
+spec:
+  releaseName: flux-cluster-generator
+  chart:
+    spec:
+      chart: flux-cluster-generator
+      sourceRef:
+        kind: HelmRepository
+        name: flux-cluster-generator
+  interval: 50m
+  driftDetection:
+    mode: enabled
+    ignore:
+      - paths: ["/spec/replicas"]
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  uninstall:
+    timeout: 1s
+    deletionPropagation: orphan
+  # Default values
+  # https://github.com/loft-demos/flux-cluster-generator/blob/main/chart/flux-cluster-generator/values.yaml
+  values:
+    args:
+      copyLabelKeys: "env,team,,app-subdomain"
+      namespaceLabelSelector: "flux-cluster-generator-enabled=true"
