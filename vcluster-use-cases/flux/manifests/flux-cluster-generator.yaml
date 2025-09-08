@@ -40,6 +40,8 @@ spec:
   # Default values
   # https://github.com/loft-demos/flux-cluster-generator/blob/main/chart/flux-cluster-generator/values.yaml
   values:
+    image:
+      tag: 'sha-2f00dda'
     args:
       copyLabelKeys: "env,team,,app-subdomain"
       namespaceLabelSelector: "flux-cluster-generator-enabled=true"
