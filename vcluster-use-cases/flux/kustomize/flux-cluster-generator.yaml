@@ -16,9 +16,12 @@ metadata:
   namespace: flux-cluster-generator
 spec:
   releaseName: flux-cluster-generator
+  targetNamespace: flux-cluster-generator
+  storageNamespace: flux-cluster-generator
   chart:
     spec:
       chart: flux-cluster-generator
+      version: '0.1.1'
       sourceRef:
         kind: HelmRepository
         name: flux-cluster-generator
