@@ -38,7 +38,7 @@ spec:
               enabled: true
           autoNodes:
             dynamic:
-              - name: gcp-node-pool
+              - name: gcp-beta-node-pool
                 provider: gcp-compute-beta-node-provider
                 limits:
                   cpu: '30'
