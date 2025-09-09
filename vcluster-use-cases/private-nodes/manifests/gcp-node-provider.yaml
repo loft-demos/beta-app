@@ -1,7 +1,7 @@
 apiVersion: management.loft.sh/v1
 kind: NodeProvider
 metadata:
-  name: gcp-compute-node-provider
+  name: gcp-compute-beta-node-provider
 spec:
   terraform:
     nodeTemplate:
