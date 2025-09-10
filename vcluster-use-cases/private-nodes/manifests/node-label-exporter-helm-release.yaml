@@ -1,0 +1,59 @@
+apiVersion: fluxcd.controlplane.io/v1
+kind: ResourceSet
+metadata:
+  labels:
+    flux-app/node-labels-exporter: 'true'
+  name: node-labels-exporter-rs
+  namespace: flux-apps
+spec:
+  inputsFrom:
+    - apiVersion: fluxcd.controlplane.io/v1
+      kind: ResourceSetInputProvider
+      selector:
+        matchLabels:
+          flux-app/node-labels-exporter: 'true'
+  resources:
+    - apiVersion: source.toolkit.fluxcd.io/v1beta2
+      kind: HelmRepository
+      metadata:
+        name: node-labels-exporter
+        namespace: flux-apps
+      spec:
+        interval: 12h
+        type: oci
+        url: oci://ghcr.io/sergelogvinov/charts/
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta2
+      kind: HelmRelease
+      metadata:
+        name: node-labels-exporter-<< inputs.project >>-<< inputs.name >>
+        namespace: flux-apps
+        labels:
+          env: dev
+          flux-app/node-labels-exporter: 'true'
+      spec:
+        releaseName: node-labels-exporter
+        targetNamespace: kube-system
+        storageNamespace: kube-system
+        chart:
+          spec:
+            chart: node-labels-exporter
+            version: '0.1.8'
+            sourceRef:
+              kind: HelmRepository
+              name: node-labels-exporter
+        interval: 50m
+        kubeConfig:
+          secretRef:
+            key: << inputs.kubeSecretKey >>
+            name: << inputs.kubeSecretName >>
+        driftDetection:
+          mode: enabled
+          ignore:
+            - paths: ["/spec/replicas"]
+        install:
+          createNamespace: true
+          remediation:
+            retries: 3
+        uninstall:
+          timeout: 1s
+          deletionPropagation: orphan
