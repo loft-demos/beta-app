@@ -36,7 +36,7 @@ spec:
       name: vcluster-flux-template
     - kind: VirtualClusterTemplate
       group: storage.loft.sh
-      name: vcluster-pro-template
+      name: vnode-demo-template
   requireTemplate: {}
   members:
     - kind: Team
