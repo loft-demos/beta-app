@@ -42,6 +42,9 @@ spec:
               kind: HelmRepository
               name: node-labels-exporter
         interval: 50m
+        dependsOn:
+          - name: cert-manager-<< inputs.project >>-<< inputs.name >>
+            namespace: flux-apps
         kubeConfig:
           secretRef:
             key: << inputs.kubeSecretKey >>
@@ -57,3 +60,47 @@ spec:
         uninstall:
           timeout: 1s
           deletionPropagation: orphan
+    # Add cert-manager repo
+    - apiVersion: source.toolkit.fluxcd.io/v1beta2
+      kind: HelmRepository
+      metadata:
+        name: jetstack
+        namespace: flux-apps
+      spec:
+        interval: 12h
+        url: https://charts.jetstack.io
+
+    # Install cert-manager first (CRDs included)
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta2
+      kind: HelmRelease
+      metadata:
+        name: cert-manager-<< inputs.project >>-<< inputs.name >>
+        namespace: flux-apps
+        labels:
+          flux-app/node-labels-exporter: 'true'
+      spec:
+        releaseName: cert-manager
+        targetNamespace: cert-manager
+        storageNamespace: cert-manager
+        chart:
+          spec:
+            chart: cert-manager
+            version: "v1.14.4"   # pick your version
+            sourceRef:
+              kind: HelmRepository
+              name: jetstack
+        interval: 30m
+        kubeConfig:
+          secretRef:
+            key: << inputs.kubeSecretKey >>
+            name: << inputs.kubeSecretName >>
+        install:
+          createNamespace: true
+          remediation:
+            retries: 3
+        upgrade:
+          remediation:
+            retries: 3
+        # cert-manager's chart flag to install CRDs
+        values:
+          installCRDs: true
