@@ -5,7 +5,6 @@ metadata:
   namespace: p-default
   labels:
     vcluster.com/import-fluxcd: 'true'
-    flux-app/tailscale: 'true'
     flux-app/podinfo-tailscale: 'true'
     flux-app/node-labels-exporter: 'true'
 spec:
