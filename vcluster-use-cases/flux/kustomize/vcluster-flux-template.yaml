@@ -2,6 +2,8 @@ kind: VirtualClusterTemplate
 apiVersion: management.loft.sh/v1
 metadata:
   name: vcluster-flux-template
+  annotations:
+    vcluster.com/template-icon: server.svg
   labels:
     patchType: versioned
 spec:
