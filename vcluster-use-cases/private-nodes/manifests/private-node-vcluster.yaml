@@ -6,7 +6,7 @@ metadata:
   labels:
     vcluster.com/import-fluxcd: 'true'
     flux-app/podinfo-tailscale: 'true'
-    flux-app/node-labels-exporter: 'true'
+    flux-app/tailscale-operator: 'true'
 spec:
   displayName: Cloud Burst vCluster
   owner:
