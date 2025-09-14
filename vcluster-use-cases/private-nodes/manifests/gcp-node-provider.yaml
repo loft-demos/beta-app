@@ -68,6 +68,7 @@ spec:
           region: us-central1
           terraform.vcluster.com/credentials: '*'
           zone: us-central1-a
+          spot: 'true'
         resources:
           cpu: '16'
           memory: 64Gi
