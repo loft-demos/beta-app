@@ -69,7 +69,7 @@ data "google_compute_image" "img" {
 
 resource "google_compute_instance_template" "spot_tpl" {
   project     = local.project
-  name_prefix = "${var.vcluster.name}-${local.demo_env_name}-"
+  name_prefix = "${var.vcluster.name}-beta-"
   region      = local.region
 
   machine_type = local.instance_type
