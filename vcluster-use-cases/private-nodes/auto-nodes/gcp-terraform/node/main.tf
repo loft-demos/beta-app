@@ -47,7 +47,7 @@ module "private_instance" {
   subnetwork        = local.subnet_name
   num_instances     = 1
   hostname          = "gcp-${var.vcluster.name}-beta-${random_id.vm_suffix.hex}"
-  instance_template = module.instance_template.self_link
+  instance_template = google_compute_instance_template.spot_tpl.self_link
 
   # Will use NAT
   access_config = []
@@ -67,28 +67,26 @@ data "google_compute_image" "img" {
   project = "ubuntu-os-cloud"
 }
 
-module "instance_template" {
-  source  = "terraform-google-modules/vm/google//modules/instance_template"
-  version = "~> 13.0"
-
-  region             = local.region
-  project_id         = local.project
-  network            = local.network_name
-  subnetwork         = local.subnet_name
-  subnetwork_project = local.project
-  tags               = ["allow-iap-ssh"] # for IAP SSH access
+resource "google_compute_instance_template" "spot_tpl" {
+  project     = local.project
+  name_prefix = "${var.vcluster.name}-${local.demo_env_name}-"
+  region      = local.region
 
   machine_type = local.instance_type
 
-  source_image         = data.google_compute_image.img.self_link
-  source_image_family  = data.google_compute_image.img.family
-  source_image_project = data.google_compute_image.img.project
+  disk {
+    source_image = data.google_compute_image.img.self_link
+    auto_delete  = true
+    boot         = true
+    disk_type    = "pd-standard"
+    disk_size_gb = 100
+  }
 
-  disk_size_gb = 100
-  disk_type    = "pd-standard"
+  network_interface {
+    subnetwork = local.subnet_name
+  }
 
-  service_account = {
-    # Use default compute service account
+  service_account {
     email  = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
     scopes = ["cloud-platform"]
   }
@@ -97,14 +95,15 @@ module "instance_template" {
     user-data = var.vcluster.userData
   }
 
-  # Spot / preemptible settings
-  preemptible        = var.use_spot
-  automatic_restart  = var.use_spot ? false : null
-  provisioning_model = var.use_spot ? "SPOT" : "STANDARD"
+  metadata_startup_script = <<-EOT
+    #!/bin/bash
+    cloud-init status --wait || true
+  EOT
 
-  # For Spot (and GPUs), this is the only valid setting.
-  on_host_maintenance = var.use_spot ? "TERMINATE" : null
-
-  startup_script = "#!/bin/bash\n# Ensure cloud-init runs\ncloud-init status --wait || true"
-
+  scheduling {
+    provisioning_model  = local.use_spot ? "SPOT" : "STANDARD"
+    preemptible         = local.use_spot
+    automatic_restart   = local.use_spot ? false : true
+    on_host_maintenance = local.use_spot ? "TERMINATE" : "MIGRATE"
+  }
 }
