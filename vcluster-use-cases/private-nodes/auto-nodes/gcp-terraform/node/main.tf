@@ -20,6 +20,12 @@ locals {
   subnet_name  = var.vcluster.nodeEnvironment.outputs["subnet_name"]
 
   instance_type = var.vcluster.nodeType.spec.properties["instance-type"]
+
+  # New: capture spot property from NodeType
+  use_spot = try(
+    lower(var.vcluster.nodeType.spec.properties["spot"]) == "true",
+    false
+  )
 }
 
 provider "google" {
@@ -90,6 +96,14 @@ module "instance_template" {
   metadata = {
     user-data = var.vcluster.userData
   }
+
+  # Spot / preemptible settings
+  preemptible        = var.use_spot
+  automatic_restart  = var.use_spot ? false : null
+  provisioning_model = var.use_spot ? "SPOT" : "STANDARD"
+
+  # For Spot (and GPUs), this is the only valid setting.
+  on_host_maintenance = var.use_spot ? "TERMINATE" : null
 
   startup_script = "#!/bin/bash\n# Ensure cloud-init runs\ncloud-init status --wait || true"
 
