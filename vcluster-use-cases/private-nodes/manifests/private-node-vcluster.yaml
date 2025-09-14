@@ -42,11 +42,6 @@ spec:
                 provider: gcp-compute-beta-node-provider
                 limits:
                   cpu: '30'
-                requirements:
-                  - property: spot
-                    operator: In
-                    values:
-                      - 'true'
     accessPoint:
       ingress: {}
     spaceTemplate:
