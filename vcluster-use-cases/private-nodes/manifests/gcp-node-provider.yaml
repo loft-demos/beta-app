@@ -24,7 +24,7 @@ spec:
           cpu: '2'
           memory: 2Gi
         cost: 24
-        name: e2-small
+        name: e2-small-spot
         maxCapacity: 20
       - properties:
           instance-type: e2-medium
@@ -36,7 +36,7 @@ spec:
         resources:
           cpu: '2'
           memory: 4Gi
-        name: e2-medium
+        name: e2-medium-spot
       - properties:
           instance-type: e2-standard-2
           project: third-pad-462018-e8
@@ -47,7 +47,7 @@ spec:
         resources:
           cpu: '2'
           memory: 8Gi
-        name: e2-standard-2
+        name: e2-standard-2-spot
       - properties:
           instance-type: e2-small
           project: third-pad-462018-e8
