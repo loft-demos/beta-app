@@ -19,6 +19,41 @@ spec:
           region: us-central1
           terraform.vcluster.com/credentials: '*'
           zone: us-central1-a
+          spot: 'true'
+        resources:
+          cpu: '2'
+          memory: 2Gi
+        cost: 24
+        name: e2-small
+        maxCapacity: 20
+      - properties:
+          instance-type: e2-medium
+          project: third-pad-462018-e8
+          region: us-central1
+          terraform.vcluster.com/credentials: '*'
+          zone: us-central1-a
+          spot: 'true'
+        resources:
+          cpu: '2'
+          memory: 4Gi
+        name: e2-medium
+      - properties:
+          instance-type: e2-standard-2
+          project: third-pad-462018-e8
+          region: us-central1
+          terraform.vcluster.com/credentials: '*'
+          zone: us-central1-a
+          spot: 'true'
+        resources:
+          cpu: '2'
+          memory: 8Gi
+        name: e2-standard-2
+      - properties:
+          instance-type: e2-small
+          project: third-pad-462018-e8
+          region: us-central1
+          terraform.vcluster.com/credentials: '*'
+          zone: us-central1-a
         resources:
           cpu: '2'
           memory: 2Gi
