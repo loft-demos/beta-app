@@ -23,7 +23,7 @@ spec:
         resources:
           cpu: '2'
           memory: 2Gi
-        cost: 24
+        cost: 12
         name: e2-small-spot
         maxCapacity: 20
       - properties:
@@ -36,6 +36,7 @@ spec:
         resources:
           cpu: '2'
           memory: 4Gi
+        cost: 14
         name: e2-medium-spot
       - properties:
           instance-type: e2-standard-2
@@ -47,6 +48,7 @@ spec:
         resources:
           cpu: '2'
           memory: 8Gi
+        cost: 18
         name: e2-standard-2-spot
       - properties:
           instance-type: e2-small
