@@ -36,8 +36,9 @@ spec:
                 provider: gcp-compute-beta-node-provider
                 limits:
                   cpu: '30'
-                requirements:
                   {{if .Values.disableSpot}}
+                requirements:
+                  
                   - property: spot
                     operator: NotIn
                     values:
