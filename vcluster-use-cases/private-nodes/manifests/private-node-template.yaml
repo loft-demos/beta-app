@@ -37,10 +37,12 @@ spec:
                 limits:
                   cpu: '30'
                 requirements:
+                  {{if .Values.disableSpot}}
                   - property: spot
                     operator: NotIn
                     values:
-                      - '{{ ternary "true" "false" .Values.disableSpot }}'
+                      - 'true'
+                  {{end}}
     accessPoint:
       ingress: {}
     spaceTemplate:
