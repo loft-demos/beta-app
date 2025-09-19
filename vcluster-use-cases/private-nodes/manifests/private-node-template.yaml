@@ -54,7 +54,7 @@ spec:
   parameters:
     - variable: region
       label: GCP Region
-      description: "Region for GCP node pool."
+      description: "Region for GCP node pool. **IMPORTANT** Updating this parameter for an existing Virtual Cluster Instance created from this template will have no effect."
       type: string
       options:
         - us-east4
@@ -66,7 +66,7 @@ spec:
     - variable: disableSpot
       label: Disable Spot Instances
       description: >-
-        By default, this template is configured to use GCP compute spot instances for private nodes. Set this to true to disable the use of spot instances for private nodes.
+        By default, this template is configured to use GCP compute spot instances for private nodes when available. Set this to true to disable the use of spot instances for private nodes.
       type: boolean
       defaultValue: 'false'
       section: Auto Node Config
