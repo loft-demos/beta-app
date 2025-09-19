@@ -1,10 +1,8 @@
 terraform {
   required_version = ">= 1.5"
   required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = ">= 6"
-    }
+    google = { source = "hashicorp/google", version = ">= 6" }
+    random = { source = "hashicorp/random", version = ">= 3.6.0" }
   }
 }
 
@@ -30,7 +28,7 @@ locals {
   )
 
   # Parse zones into a list (trim blanks)
-  zones_raw = compact([for z in split(",", tostring(local.zone_input)) : trim(z)])
+  zones_raw = compact([for z in split(",", tostring(local.zone_input)) : trimspace(z)])
   # contains() is for lists; use regex to test for '-' in strings
   zones_are_full = length(local.zones_raw) > 0 && anytrue([
     for z in local.zones_raw : can(regex("-", z))
