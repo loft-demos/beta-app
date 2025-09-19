@@ -40,7 +40,7 @@ spec:
                   - property: region
                     operator: In
                     values:
-                      - 'us-central1'
+                      - {{ .Values.region | quote }}
                   {{if .Values.disableSpot}}
                   - property: spot
                     operator: NotIn
@@ -52,6 +52,17 @@ spec:
     spaceTemplate:
       metadata: {}
   parameters:
+    - variable: region
+      label: GCP Region
+      description: "Region for GCP node pool."
+      type: string
+      options:
+        - us-east4
+        - us-central1
+        - us-west2
+        - europe-west2
+      defaultValue: us-central1
+      section: Auto Node Config
     - variable: disableSpot
       label: Disable Spot Instances
       description: >-
