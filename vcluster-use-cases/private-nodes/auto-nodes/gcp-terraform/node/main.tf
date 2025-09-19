@@ -31,6 +31,10 @@ locals {
 
   # Parse zones into a list (trim blanks)
   zones_raw = compact([for z in split(",", tostring(local.zone_input)) : trim(z)])
+  # contains() is for lists; use regex to test for '-' in strings
+  zones_are_full = length(local.zones_raw) > 0 && anytrue([
+    for z in local.zones_raw : can(regex("-", z))
+  ])
 }
 
 provider "google" {
