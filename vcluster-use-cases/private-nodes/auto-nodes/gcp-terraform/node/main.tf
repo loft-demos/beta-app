@@ -95,6 +95,7 @@ data "google_compute_image" "img" {
 
 # Optional: pin provider.zone to the selected zone (some resources read it)
 provider "google" {
+  alias   = "with_zone"
   project = local.project
   region  = local.region
   zone    = local.selected_zone
@@ -121,6 +122,7 @@ module "private_instance" {
 }
 
 resource "google_compute_instance_template" "spot_tpl" {
+  provider    = google.with_zone
   project     = local.project
   name_prefix = "${var.vcluster.name}-beta-"
   region      = local.region
