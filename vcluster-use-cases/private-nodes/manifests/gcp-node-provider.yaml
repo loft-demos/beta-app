@@ -18,7 +18,7 @@ spec:
           project: third-pad-462018-e8
           region: 'us-central1,us-east4,us-west2'
           terraform.vcluster.com/credentials: '*'
-          zone: 'us-central1-a,us-east4-a,us-west2-a'
+          zone: 'a,b,c'
           spot: 'true'
         resources:
           cpu: '2'
@@ -31,7 +31,7 @@ spec:
           project: third-pad-462018-e8
           region: 'us-central1,us-east4,us-west2'
           terraform.vcluster.com/credentials: '*'
-          zone: 'us-central1-a,us-east4-a,us-west2-a'
+          zone: 'a,b,c'
           spot: 'true'
         resources:
           cpu: '2'
@@ -43,7 +43,7 @@ spec:
           project: third-pad-462018-e8
           region: 'us-central1,us-east4,us-west2'
           terraform.vcluster.com/credentials: '*'
-          zone: 'us-central1-a,us-east4-a,us-west2-a'
+          zone: 'a,b,c'
           spot: 'true'
         resources:
           cpu: '2'
@@ -55,7 +55,7 @@ spec:
           project: third-pad-462018-e8
           region: 'us-central1,us-east4,us-west2'
           terraform.vcluster.com/credentials: '*'
-          zone: 'us-central1-a,us-east4-a,us-west2-a'
+          zone: 'a,b,c'
           spot: 'true'
         resources:
           cpu: '8'
@@ -67,7 +67,7 @@ spec:
           project: third-pad-462018-e8
           region: 'us-central1,us-east4,us-west2'
           terraform.vcluster.com/credentials: '*'
-          zone: 'us-central1-a,us-east4-a,us-west2-a'
+          zone: 'a,b,c'
           spot: 'true'
         resources:
           cpu: '16'
