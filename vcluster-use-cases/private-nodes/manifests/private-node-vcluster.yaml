@@ -43,10 +43,10 @@ spec:
                 limits:
                   cpu: '30'
                 requirements:
-                  - property: spot
-                    operator: NotIn
+                  - property: region
+                    operator: In
                     values:
-                      - 'true'
+                      - us-central1
     accessPoint:
       ingress: {}
     spaceTemplate:
