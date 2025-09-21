@@ -29,7 +29,7 @@ spec:
           distro:
             k8s:
               image:
-                tag: v1.33.4
+                tag: v1.34.1
         privateNodes:
           enabled: true
           vpn:
