@@ -23,4 +23,22 @@ spec:
       integrationInfo: # this is optional and defaulted
         name: vcp-demo-secrets
         version: v1
-    
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: loft-demos-ghcr-write
+  namespace: p-default
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: vcp-demo-store
+  target:
+    creationPolicy: Owner
+  data:
+    - secretKey: username
+      remoteRef:
+        key: loft-demos-ghcr-write/username
+    - secretKey: password
+      remoteRef:
+        key: loft-demos-ghcr-write/password
