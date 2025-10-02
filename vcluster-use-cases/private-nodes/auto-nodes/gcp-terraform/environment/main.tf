@@ -11,10 +11,7 @@ terraform {
       version = ">= 6.19.0, < 7.0.0"
       # or pin: version = "6.25.0"
     }
-    random = {
-      source  = "registry.terraform.io/hashicorp/random"
-      version = "~> 3.0"
-    }
+    random = { source = "hashicorp/random", version = ">= 3.6.0" }
   }
 }
 
