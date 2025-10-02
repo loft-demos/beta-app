@@ -2,18 +2,17 @@ terraform {
   required_version = ">= 1.5"
   required_providers {
     google = {
-      source  = "hashicorp/google"
+      source  = "registry.terraform.io/hashicorp/google"
       version = ">= 6.19.0, < 7.0.0"
-      # or pin a specific known-good, e.g.:
-      # version = "6.25.0"
+      # or pin: version = "6.25.0"
     }
     google-beta = {
-      source  = "hashicorp/google-beta"
+      source  = "registry.terraform.io/hashicorp/google-beta"
       version = ">= 6.19.0, < 7.0.0"
-      # or pin to match: version = "6.25.0"
+      # or pin: version = "6.25.0"
     }
     random = {
-      source  = "hashicorp/random"
+      source  = "registry.terraform.io/hashicorp/random"
       version = "~> 3.0"
     }
   }
