@@ -6,15 +6,12 @@ spec:
   terraform:
     nodeTemplate:
       git:
-        repository: https://github.com/loft-sh/vcluster-auto-nodes-gcp.git
-        branch: stable
-        subPath: node
+        repository: https://github.com/loft-demos/beta-app.git
+        subPath: vcluster-use-cases/private-nodes/auto-nodes/gcp-terraform/node
     nodeEnvironmentTemplate:
-      infrastructure:
-        git:
-          repository: https://github.com/loft-sh/vcluster-auto-nodes-gcp.git
-          branch: stable
-          subPath: environment
+      git:
+        repository: https://github.com/loft-demos/beta-app.git
+        subPath: vcluster-use-cases/private-nodes/auto-nodes/gcp-terraform/environment
     nodeTypes:
       - properties:
           instance-type: e2-small
