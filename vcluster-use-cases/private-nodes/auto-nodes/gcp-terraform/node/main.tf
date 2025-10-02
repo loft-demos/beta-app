@@ -122,6 +122,7 @@ module "private_instance" {
   region            = local.region
   zone              = local.selected_zone
   subnetwork        = local.subnet_name
+  subnetwork_project = local.project 
   num_instances     = 1
   hostname          = "gcp-${var.vcluster.name}-beta-${random_id.vm_suffix.hex}"
   instance_template = google_compute_instance_template.spot_tpl.self_link
@@ -153,6 +154,7 @@ resource "google_compute_instance_template" "spot_tpl" {
 
   network_interface {
     subnetwork = local.subnet_name
+    subnetwork_project = local.project
   }
 
   service_account {
