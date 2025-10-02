@@ -31,7 +31,7 @@ spec:
       info:
         - name: GitHub Repo
           value: https://github.com/loft-demos/beta-app/
-      project: 'loft-{{ index .metadata.labels "demos.loft.sh/project" }}'
+      project: 'default'
       source:
         path: vcluster-use-cases/argocd-vcluster-add-ons/manifests/{{.metadata.labels.env}}/
         repoURL: https://github.com/loft-demos/beta-app.git
