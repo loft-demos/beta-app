@@ -1,0 +1,42 @@
+controlPlane:
+  standalone:
+    enabled: true
+    joinNode:
+      enabled: true
+    autoNodes:
+      provider: gcp-compute-beta-node-provider
+      quantity: 3
+      requirements:
+        - property: region
+          operator: In
+          values:
+            - us-central1
+        - property: spot
+          operator: NotIn
+          values:
+            - 'true'
+  distro:
+    k8s:
+      image:
+        tag: v1.34.1
+privateNodes:
+  enabled: true
+  vpn:
+    enabled: true
+    nodeToNode:
+      enabled: true
+  autoNodes:
+    dynamic:
+      - name: gcp-beta-node-pool
+        provider: gcp-compute-beta-node-provider
+        limits:
+          cpu: '30'
+        requirements:
+          - property: region
+            operator: In
+            values:
+              - us-central1
+          - property: spot
+            operator: NotIn
+            values:
+              - 'true'
