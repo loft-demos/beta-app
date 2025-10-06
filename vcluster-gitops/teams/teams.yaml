@@ -7,7 +7,6 @@ spec:
   owner:
     team: loft-admins
   users:
-    - anna-smith
     - admin
   clusterRoles:
     - name: loft-management-project-user
