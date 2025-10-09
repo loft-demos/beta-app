@@ -18,7 +18,7 @@ spec:
       enabled: true
     helmRelease:
       chart:
-        version: 0.25.0
+        version: 0.28.0
       values: |
         sync:
           toHost:
@@ -36,6 +36,9 @@ spec:
             k8s:
               image:
                 tag: "{{ .Values.k8sVersion }}"
+          statefulSet:
+            annotations:
+              sleepmode.loft.sh/exclude: 'true'
         sleepMode:
           enabled: true
           autoSleep:
